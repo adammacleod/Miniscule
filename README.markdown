@@ -37,12 +37,21 @@ Miniscule prefers implicit rather than explicit. A project in Miniscule is simpl
     --> template.html
     -> output/
 
-You can view a sample project [here](http://www.github.com/adammacleod/adam.macleod.id.au/)
+You can view a sample project [here](http://www.github.com/adammacleod/adam.macleod.id.au/).
 
 website/
 --------
 
 Contains your website contents. All files should be in the form source.md. Any number of directories and subdirectories are permitted in this folder, they will all be copied to the output directory.
+
+Source files should begin with a Title and Template, and then contain the body of the page seperated by a single return.
+
+    Title: Post Title
+    Template: templatename
+
+    Contents of page should go here.
+
+You can add any extra meta data you like to the opening section of the page. See the [Markdown Help](http://www.freewisdom.org/projects/python-markdown/Meta-Data) for more information about meta data.
 
 templates/
 ----------
@@ -57,6 +66,8 @@ The css directory is copied file for file into output/css/.
 output/
 -------
 
-The output directory contains the compiled website. **WARNING** all files in this directory will be deleted without any notice.
+The output directory contains the compiled website. 
+
+**WARNING** all files in this directory will be deleted without any notice.
 
 This directory will be created if it does not exist. It is recommended that you do not check this directory into version control if you are using it.
