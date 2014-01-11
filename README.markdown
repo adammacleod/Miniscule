@@ -42,9 +42,9 @@ You can view a sample project [here](http://www.github.com/adammacleod/adam.macl
 website/
 --------
 
-Contains your website contents. All files should be in the form source.md. Any number of directories and subdirectories are permitted in this folder, they will all be copied to the output directory.
+Contains your website contents. Any number of files, directories and subdirectories are permitted in this folder, they will all be copied to the output directory. Any files with a .md extension will be rendered to HTML.
 
-Source files should begin with a Title and Template, and then contain the body of the page seperated by a single return.
+Source md files should begin with a Title and Template, and then contain the body of the page seperated by a single return.
 
     Title: Post Title
     Template: templatename
@@ -56,7 +56,7 @@ You can add any extra meta data you like to the opening section of the page. See
 templates/
 ----------
 
-The templates directory should contain a set of Jinja2 templates in the form template.html.
+The templates directory should contain a set of Jinja2 templates in the form templatename.html.
 
 templates/css/
 --------------

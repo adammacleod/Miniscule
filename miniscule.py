@@ -58,6 +58,7 @@ def process_file(dir, file):
     """
     [filename, file_ext] = os.path.splitext(file)
     if file_ext != '.md':
+        copy_file(dir, file)
         return
 
     with open(os.path.join(dir, file), 'r') as f:
@@ -84,6 +85,19 @@ def render(page):
     
     return output
 
+def output_path(source_dir):
+    """Calculates the output_path for a file contained inside the WEBSITE_DIR.
+
+    Keyword arguments:
+    source_dir -- A string containing the source directory in the format
+                  WEBSITE_DIR/path/to/folder. WEBSITE_DIR will be stripped
+                  and the OUTPUT_DIR will be prepended.
+    """
+    # rel_path is the position of the file relative to the source website root
+    #   This is needed to determine where to write the output file.
+    rel_path = os.path.relpath(source_dir, WEBSITE_DIR)
+    return os.path.join(OUTPUT_DIR, rel_path)
+
 def write_file(source_dir, filename, contents):
     """Writes contents into filename.
     
@@ -95,18 +109,27 @@ def write_file(source_dir, filename, contents):
                 value.
     contents -- The contents of the file to write.
     """
-    # rel_path is the position of the file relative to the source website root
-    #   This is needed to determine where to write the output file.
-    rel_path = os.path.relpath(source_dir, WEBSITE_DIR)
-    output_path = os.path.join(OUTPUT_DIR, rel_path)
+    dest_path = output_path(source_dir)
                                         
-    output_file = os.path.join(output_path, filename + '.html')
+    output_file = os.path.join(dest_path, filename + '.html')
     
-    if not os.path.exists(output_path):
-        os.makedirs(output_path)
+    if not os.path.exists(dest_path):
+        os.makedirs(dest_path)
                     
     with open(output_file, 'w') as f:
         f.write(contents)            
+
+def copy_file(source_dir, file):
+    """Copies a file verbatim from WEBSITE_DIR into OUTPUT_DIR.
+
+    Keyword arguments:
+    source_dir -- The source directory of the original file. This directory
+                  will have the website source directory stripped and the
+                  output directory prepended.
+    file -- Full filename of the file (eg. index.md)
+    """
+    dest_path = output_path(source_dir)
+    shutil.copy2(os.path.join(source_dir, file), dest_path)
 
 def copy_css():
     """Searches for CSS_DIR and copies it into the OUTPUT_DIR/css if it exists.
